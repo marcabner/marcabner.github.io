@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light" data-lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resume / CV - Yair Abner Ramírez Enríquez</title>
+<style>
+  /* Variables para el Tema Claro */
+  [data-theme="light"] {
+    --bg-main: #f8fafc;
+    --card-bg: linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%);
+    --border-color: #cbd5e1;
+    --border-accent: #2563eb;
+    --text-primary: #0f172a;
+    --text-secondary: #475569;
+    --accent-blue: #1d4ed8;
+    --accent-cyan: #0284c7;
+    --accent-green: #15803d;
+    --btn-bg: #ffffff;
+    --btn-border: #94a3b8;
+    --tag-bg: #e0f2fe;
+    --tag-border: #bae6fd;
+    --tag-color: #0369a1;
+    --table-header: #f1f5f9;
+  }
+
+  /* Variables para el Tema Oscuro */
+  [data-theme="dark"] {
+    --bg-main: #0f172a;
+    --card-bg: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    --border-color: #3b82f6;
+    --border-accent: #3b82f6;
+    --text-primary: #f8fafc;
+    --text-secondary: #94a3b8;
+    --accent-blue: #60a5fa;
+    --accent-cyan: #38bdf8;
+    --accent-green: #4ade80;
+    --btn-bg: #1e293b;
+    --btn-border: #475569;
+    --tag-bg: rgba(51, 65, 85, 0.6);
+    --tag-border: #475569;
+    --tag-color: #38bdf8;
+    --table-header: rgba(30, 41, 59, 0.5);
+  }
+
+  body {
+    background-color: var(--bg-main);
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    color: var(--text-primary);
+    margin: 0;
+    padding: 70px 15px 30px 15px;
+    display: flex;
+    justify-content: center;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  /* Barra Superior de Controles (Fija) */
+  .control-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: var(--card-bg);
+    border-bottom: 1.5px solid var(--border-color);
+    padding: 10px 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    box-sizing: border-box;
+  }
+
+  .toggle-btn {
+    background-color: var(--btn-bg);
+    border: 1.5px solid var(--btn-border);
+    color: var(--text-primary);
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s ease-in-out;
+  }
+
+  .toggle-btn:hover {
+    border-color: var(--accent-cyan);
+    color: var(--accent-cyan);
+    transform: translateY(-1px);
+  }
+
+  .container {
+    width: 100%;
+    max-width: 900px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .card {
+    background: var(--card-bg);
+    border: 1.5px solid var(--border-color);
+    border-radius: 12px;
+    padding: 18px 24px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: background 0.3s ease, border-color 0.3s ease;
+  }
+
+  /* Control de Visibilidad por Idioma */
+  [data-lang="es"] .lang-en { display: none !important; }
+  [data-lang="en"] .lang-es { display: none !important; }
+
+  /* Header Section */
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 12px;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .player-title h1 {
+    font-size: 24px;
+    font-weight: 800;
+    color: var(--accent-blue);
+    margin: 0 0 4px 0;
+    letter-spacing: 0.5px;
+  }
+
+  .player-title div {
+    font-size: 14px;
+    color: var(--text-secondary);
+    font-weight: 600;
+  }
+
+  .level-badge {
+    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+    color: #ffffff;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 1px;
+    box-shadow: 0 4px 10px rgba(37, 99, 235, 0.25);
+  }
+
+  /* Contact Section Styles */
+  .card-compact {
+    padding: 10px 16px !important;
+  }
+
+  .contact-grid {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  .contact-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    padding: 6px 12px;
+    background-color: var(--btn-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    color: var(--text-primary);
+    text-decoration: none;
+    transition: all 0.2s ease-in-out;
+  }
+
+  .contact-item:hover {
+    border-color: var(--accent-blue);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(37, 99, 235, 0.15);
+  }
+
+  .contact-icon {
+    width: 18px;
+    height: 18px;
+    fill: var(--accent-blue);
+    transition: fill 0.2s ease-in-out;
+  }
+
+  .contact-item:hover .contact-icon {
+    fill: var(--accent-cyan);
+  }
+
+  .contact-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    transition: color 0.2s ease-in-out;
+  }
+
+  .contact-item:hover .contact-label {
+    color: var(--accent-blue);
+  }
+
+  /* Section Titles */
+  .section-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--accent-cyan);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 0 0 12px 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .section-title::before {
+    content: "◈";
+    color: var(--accent-blue);
+  }
+
+  /* Stat Bars */
+  .stat-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .stat-row {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .stat-info {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  .stat-name { color: var(--text-primary); }
+  .stat-value { color: var(--accent-cyan); }
+
+  .bar-bg {
+    background-color: var(--border-color);
+    height: 10px;
+    border-radius: 6px;
+    overflow: hidden;
+  }
+
+  .bar-fill {
+    height: 100%;
+    border-radius: 6px;
+    background: linear-gradient(90deg, #2563eb 0%, #38bdf8 100%);
+  }
+
+  /* Inventory Table */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+
+  th, td {
+    padding: 8px 10px;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  th {
+    color: var(--accent-blue);
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 12px;
+    background-color: var(--table-header);
+  }
+
+  td:first-child {
+    font-weight: 600;
+    color: var(--text-secondary);
+    width: 30%;
+  }
+
+  td:last-child {
+    color: var(--text-primary);
+  }
+
+  /* Quest Log (Experience) */
+  .quest-item {
+    border-left: 3px solid var(--border-accent);
+    padding-left: 16px;
+    margin-bottom: 16px;
+  }
+
+  .quest-item:last-child {
+    margin-bottom: 0;
+  }
+
+  .quest-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 4px;
+  }
+
+  .role-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--accent-blue);
+  }
+
+  .company-name {
+    color: var(--accent-green);
+    font-weight: 600;
+  }
+
+  .quest-date {
+    font-size: 12px;
+    color: var(--text-secondary);
+    font-style: italic;
+  }
+
+  .quest-desc {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+
+  .quest-bullets {
+    margin: 0;
+    padding-left: 18px;
+    font-size: 13px;
+    color: var(--text-primary);
+  }
+
+  .quest-bullets li {
+    margin-bottom: 4px;
+    line-height: 1.4;
+  }
+
+  .tech-tags {
+    margin-top: 6px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .tag {
+    background-color: var(--tag-bg);
+    border: 1px solid var(--tag-border);
+    color: var(--tag-color);
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 600;
+  }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  @media (max-width: 600px) {
+    .two-col { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- BARRA DE CONTROLES INTERACTIVOS -->
+<div class="control-bar">
+  <button class="toggle-btn" onclick="toggleLanguage()">
+    🌐 <span class="lang-es">Idioma: Español (Cambiar a Inglés)</span><span class="lang-en">Language: English (Switch to Spanish)</span>
+  </button>
+  <button class="toggle-btn" onclick="toggleTheme()">
+    🌗 <span class="lang-es">Tema: Claro / Oscuro</span><span class="lang-en">Theme: Light / Dark</span>
+  </button>
+</div>
+
+<div class="container">
+
+  <!-- ENCABEZADO -->
+  <div class="card">
+    <div class="header">
+      <div class="player-title">
+        <h1>YAIR ABNER RAMÍREZ ENRÍQUEZ</h1>
+        <div class="lang-es">CLASE: INGENIERO DE SOFTWARE SENIOR & ARQUITECTO DE SISTEMAS</div>
+        <div class="lang-en">CLASS: SENIOR SOFTWARE ENGINEER & SYSTEM ARCHITECT</div>
+        <div style="font-weight: normal; font-size: 12px; margin-top: 4px; color: var(--text-secondary);">
+          <span class="lang-es">Ingeniería en Telemática (UPIITA - IPN 2004) | Servicios Financieros & Tecnología Empresarial</span>
+          <span class="lang-en">Telematics Engineering (UPIITA - IPN 2004) | Financial Services & Enterprise Tech</span>
+        </div>
+      </div>
+      <div class="level-badge">
+        <span class="lang-es">NIVEL 10+ EXP</span>
+        <span class="lang-en">LVL 10+ EXP</span>
+      </div>
+    </div>
+    <p style="font-size: 13.5px; line-height: 1.4; color: var(--text-secondary); margin: 12px 0 0 0;" class="lang-es">
+      Ingeniero Senior con más de 10 años de experiencia diseñando e implementando sistemas de alta disponibilidad para el sector financiero. Especializado en migración de sistemas legados (Forms/4GL a Microservicios), arquitectura backend en Java, desarrollo frontend en React y flujos de ingeniería asistidos por Inteligencia Artificial (Claude AI, Copilot).
+    </p>
+    <p style="font-size: 13.5px; line-height: 1.4; color: var(--text-secondary); margin: 12px 0 0 0;" class="lang-en">
+      Senior Engineer with 10+ years of experience engineering high-availability systems for the financial sector. Specialized in legacy system migrations (Forms/4GL to Microservices), Java backend architecture, React frontends, and AI-assisted engineering workflows (Claude AI, Copilot).
+    </p>
+  </div>
+
+  <!-- SECCIÓN DE CONTACTO -->
+  <div class="card card-compact">
+    <div class="contact-grid">
+      
+      <!-- LinkedIn -->
+      <a href="https://www.linkedin.com/in/yair-ramirez/" target="_blank" class="contact-item" title="LinkedIn">
+        <svg class="contact-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+          <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 10.9v8.37H9.25V10.9H6.46M7.86 6.78a1.62 1.62 0 1 0 0 3.24 1.62 1.62 0 0 0 0-3.24z"/>
+        </svg>
+        <span class="contact-label">LinkedIn</span>
+      </a>
+
+      <!-- Correo -->
+      <a href="mailto:marcabner@gmail.com" class="contact-item" title="Correo">
+        <svg class="contact-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+          <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+        </svg>
+        <span class="contact-label">marcabner@gmail.com</span>
+      </a>
+
+      <!-- GitHub -->
+      <a href="https://github.com/marcabner" target="_blank" class="contact-item" title="GitHub">
+        <svg class="contact-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+          <path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.1-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2z"/>
+        </svg>
+        <span class="contact-label">GitHub</span>
+      </a>
+
+      <!-- Teléfono -->
+      <a href="tel:5510243391" class="contact-item" title="Teléfono">
+        <svg class="contact-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+          <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+        </svg>
+        <span class="contact-label">5510243391</span>
+      </a>
+
+    </div>
+  </div>
+
+  <!-- MATRIZ DE HABILIDADES -->
+  <div class="card">
+    <div class="section-title">
+      <span class="lang-es">Matriz de Habilidades Tecnológicas</span>
+      <span class="lang-en">Attributes & Tech Matrix</span>
+    </div>
+    <div class="stat-grid">
+      
+      <div class="stat-row">
+        <div class="stat-info">
+          <span class="stat-name lang-es">Arquitectura Backend (Java / Spring Boot / APIs REST)</span>
+          <span class="stat-name lang-en">Backend Architecture (Java / Spring Boot / REST APIs)</span>
+          <span class="stat-value">95%</span>
+        </div>
+        <div class="bar-bg"><div class="bar-fill" style="width: 95%;"></div></div>
+      </div>
+
+      <div class="stat-row">
+        <div class="stat-info">
+          <span class="stat-name lang-es">Desarrollo Frontend (React JS / Redux / Material UI)</span>
+          <span class="stat-name lang-en">Frontend Development (React JS / Redux / Material UI)</span>
+          <span class="stat-value">85%</span>
+        </div>
+        <div class="bar-bg"><div class="bar-fill" style="width: 85%;"></div></div>
+      </div>
+
+      <div class="stat-row">
+        <div class="stat-info">
+          <span class="stat-name lang-es">Nube y Contenedores (Azure DevOps / Docker / Jenkins)</span>
+          <span class="stat-name lang-en">Cloud & Containers (Azure DevOps / Docker / Jenkins)</span>
+          <span class="stat-value">80%</span>
+        </div>
+        <div class="bar-bg"><div class="bar-fill" style="width: 80%;"></div></div>
+      </div>
+
+      <div class="stat-row">
+        <div class="stat-info">
+          <span class="stat-name lang-es">Liderazgo Ágil y Análisis (Scrum Master / Arquitectura de Sistemas)</span>
+          <span class="stat-name lang-en">Agile Leadership & Analysis (Scrum Master / System Architecture)</span>
+          <span class="stat-value">85%</span>
+        </div>
+        <div class="bar-bg"><div class="bar-fill" style="width: 85%;"></div></div>
+      </div>
+
+      <div class="stat-row">
+        <div class="stat-info">
+          <span class="stat-name lang-es">Ingeniería Asistida por IA (Agentes Claude AI / Copilot / Automatización)</span>
+          <span class="stat-name lang-en">AI-Assisted SDLC (Claude AI Agents / Copilot / Automation)</span>
+          <span class="stat-value">75%</span>
+        </div>
+        <div class="bar-bg"><div class="bar-fill" style="width: 75%;"></div></div>
+      </div>
+
+      <div class="stat-row">
+        <div class="stat-info">
+          <span class="stat-name lang-es">Bases de Datos e Ingeniería Legada (Oracle / PL-SQL / Informix 4GL)</span>
+          <span class="stat-name lang-en">Database & Legacy Engineering (Oracle / PL-SQL / Informix 4GL)</span>
+          <span class="stat-value">80%</span>
+        </div>
+        <div class="bar-bg"><div class="bar-fill" style="width: 80%;"></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- HERRAMIENTAS Y ESPECIALIDADES -->
+  <div class="two-col">
+    <div class="card">
+      <div class="section-title">
+        <span class="lang-es">Herramientas e Inventario</span>
+        <span class="lang-en">Equipment & Inventory</span>
+      </div>
+      <table>
+        <tr>
+          <td><span class="lang-es">Lenguajes</span><span class="lang-en">Languages</span></td>
+          <td>Java (5-16), TypeScript, JavaScript, PL/SQL, ActionScript</td>
+        </tr>
+        <tr>
+          <td><span class="lang-es">Frameworks</span><span class="lang-en">Frameworks</span></td>
+          <td>Spring Boot, React JS, Redux, Node JS, Hibernate, JPA</td>
+        </tr>
+        <tr>
+          <td><span class="lang-es">Bases de Datos</span><span class="lang-en">Databases</span></td>
+          <td>Oracle 11g, Informix DB, MySQL, SQL Server</td>
+        </tr>
+        <tr>
+          <td><span class="lang-es">DevOps y Nube</span><span class="lang-en">DevOps & Cloud</span></td>
+          <td>Azure DevOps, Docker, Kubernetes, OpenShift, Jenkins</td>
+        </tr>
+        <tr>
+          <td><span class="lang-es">Herramientas IA</span><span class="lang-en">AI Tools</span></td>
+          <td>Claude AI, GitHub Copilot, Harness</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="card">
+      <div class="section-title">
+        <span class="lang-es">Especialidades y Certificaciones</span>
+        <span class="lang-en">Traits & Passive Skills</span>
+      </div>
+      <table>
+        <tr>
+          <td><span class="lang-es">Dominio de Negocio</span><span class="lang-en">Domain Mastery</span></td>
+          <td>
+            <span class="lang-es">Tesorería, Mercado Cambiario (FX), Fondos de Inversión, Derivados, Mercado de Dinero</span>
+            <span class="lang-en">Treasury, FX Market, Investment Funds, Derivatives, Money Market</span>
+          </td>
+        </tr>
+        <tr>
+          <td><span class="lang-es">Certificaciones</span><span class="lang-en">Certifications</span></td>
+          <td>
+            • SCRUM Master (Itera)<br>
+            • <span class="lang-es">Asesor en Estrategias de Inversión (BMV)</span><span class="lang-en">Investment Strategy Advisor (BMV)</span><br>
+            • <span class="lang-es">Especialista Técnico en Java (Qualitren)</span><span class="lang-en">Java Tech Expert (Qualitren)</span>
+          </td>
+        </tr>
+        <tr>
+          <td><span class="lang-es">Idiomas</span><span class="lang-en">Languages</span></td>
+          <td>
+            • <span class="lang-es">Español: Nativo (100%)</span><span class="lang-en">Spanish: Native (100%)</span><br>
+            • <span class="lang-es">Inglés: B1 (Intermedio - actualmente estudiando para nivel B2)</span><span class="lang-en">English: B1 (Intermediate - actively studying toward B2)</span>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- REGISTRO DE EXPERIENCIA -->
+  <div class="card">
+    <div class="section-title">
+      <span class="lang-es">Registro de Experiencia Profesional</span>
+      <span class="lang-en">Quest Log (Professional Experience)</span>
+    </div>
+
+    <!-- Puesto 1 -->
+    <div class="quest-item">
+      <div class="quest-header">
+        <div>
+          <span class="role-title lang-es">Ingeniero de Software Consultor / Desarrollador Full Stack Senior</span>
+          <span class="role-title lang-en">Consultant Software Engineer / Senior Full Stack Developer</span>
+          <span class="company-name">@ TATA Consultancy Services</span>
+        </div>
+        <span class="quest-date"><span class="lang-es">Feb 2025 – Dic 2025</span><span class="lang-en">Feb 2025 – Dec 2025</span></span>
+      </div>
+      <div class="quest-desc lang-es"><strong>Misión:</strong> Modernización del módulo MUR SIGGA desde Oracle Forms hacia microservicios modernos en Java y React.</div>
+      <div class="quest-desc lang-en"><strong>Mission:</strong> Modernize MUR SIGGA module from Oracle Forms to modern Java microservices & React.</div>
+      
+      <ul class="quest-bullets lang-es">
+        <li>Construcción de APIs REST escalables con Java y Spring Boot.</li>
+        <li>Diseño de componentes frontend responsivos utilizando React.js, Redux y Material UI.</li>
+        <li>Uso de Agentes de IA (Claude AI) y servicios de Harness para acelerar la refactorización y documentación del SDLC.</li>
+      </ul>
+      <ul class="quest-bullets lang-en">
+        <li>Built scalable REST APIs with Java and Spring Boot.</li>
+        <li>Designed responsive front-end components using React.js, Redux, and Material UI.</li>
+        <li>Leveraged AI Agents (Claude AI) and Harness services to accelerate refactoring and SDLC documentation.</li>
+      </ul>
+
+      <div class="tech-tags">
+        <span class="tag">Java</span><span class="tag">Spring Boot</span><span class="tag">React.js</span><span class="tag">Claude AI</span><span class="tag">Azure DevOps</span>
+      </div>
+    </div>
+
+    <!-- Puesto 2 -->
+    <div class="quest-item">
+      <div class="quest-header">
+        <div>
+          <span class="role-title lang-es">Ingeniero Consultor de Software Senior (Full Stack)</span>
+          <span class="role-title lang-en">Consultant Software Engineer Senior (Full Stack)</span>
+          <span class="company-name">@ Capgemini</span>
+        </div>
+        <span class="quest-date"><span class="lang-es">Mar 2020 – Feb 2025</span><span class="lang-en">Mar 2020 – Feb 2025</span></span>
+      </div>
+      <div class="quest-desc lang-es"><strong>Misión:</strong> Desarrollo full-stack y despliegue contenedorizado dentro de equipos SCRUM.</div>
+      <div class="quest-desc lang-en"><strong>Mission:</strong> Full-stack development and containerized deployment within SCRUM teams.</div>
+      
+      <ul class="quest-bullets lang-es">
+        <li>Ingeniería de microservicios RESTful en Java e integración de interfaces frontend con Redux y React.</li>
+        <li>Análisis de arquitecturas legadas en Oracle Forms y PL/SQL para planes de migración.</li>
+        <li>Despliegue de microservicios usando contenedores Docker y orquestación con Red Hat OpenShift.</li>
+      </ul>
+      <ul class="quest-bullets lang-en">
+        <li>Engineered Java RESTful microservices and integrated front-end interfaces with Redux and React.</li>
+        <li>Analyzed legacy Oracle Forms & PL/SQL layouts for architecture migration.</li>
+        <li>Deployed microservices using Docker containers and Red Hat OpenShift orchestration.</li>
+      </ul>
+
+      <div class="tech-tags">
+        <span class="tag">Java</span><span class="tag">Microservicios</span><span class="tag">OpenShift</span><span class="tag">Docker</span><span class="tag">PL/SQL</span>
+      </div>
+    </div>
+
+    <!-- Puesto 3 -->
+    <div class="quest-item">
+      <div class="quest-header">
+        <div>
+          <span class="role-title lang-es">Líder Técnico y Desarrollador</span>
+          <span class="role-title lang-en">Technical Leader & Developer</span>
+          <span class="company-name">@ STARE IT Services / JOMTEC</span>
+        </div>
+        <span class="quest-date"><span class="lang-es">Oct 2016 – Dic 2019</span><span class="lang-en">Oct 2016 – Dec 2019</span></span>
+      </div>
+      <ul class="quest-bullets lang-es">
+        <li>Liderazgo de equipos de desarrollo de software para plataformas en el sector salud e instituciones gubernamentales.</li>
+        <li>Análisis de volcados de memoria (thread/heap dumps) para la resolución de errores críticos en entornos de producción.</li>
+        <li>Desarrollo de aplicaciones web centrales utilizando Java, Informix DB 4GL y PHP Laravel.</li>
+      </ul>
+      <ul class="quest-bullets lang-en">
+        <li>Led software development teams across health and government institution platforms.</li>
+        <li>Conducted thread/heap dump analysis during production issues to resolve critical bugs.</li>
+        <li>Built core web applications using Java, Informix DB 4GL, and PHP Laravel.</li>
+      </ul>
+    </div>
+
+    <!-- Puesto 4 -->
+    <div class="quest-item">
+      <div class="quest-header">
+        <div>
+          <span class="role-title lang-es">Desarrollador Java EE y Oracle PL/SQL</span>
+          <span class="role-title lang-en">Java EE Developer & Oracle PL/SQL</span>
+          <span class="company-name">@ Tecnomedia / Monex Banco</span>
+        </div>
+        <span class="quest-date"><span class="lang-es">Ago 2015 – Sep 2016</span><span class="lang-en">Aug 2015 – Sep 2016</span></span>
+      </div>
+      <ul class="quest-bullets lang-es">
+        <li>Diseño e implementación de arquitectura de aplicaciones para interoperabilidad entre Murex y Monex Net.</li>
+        <li>Desarrollo de procedimientos almacenados PL/SQL de alto rendimiento y servicios backend en Spring/Hibernate.</li>
+      </ul>
+      <ul class="quest-bullets lang-en">
+        <li>Designed and implemented application architecture for interoperability between Murex and Monex Net.</li>
+        <li>Developed high-performance PL/SQL procedures and Spring/Hibernate backend services.</li>
+      </ul>
+    </div>
+
+    <!-- Puesto 5 -->
+    <div class="quest-item">
+      <div class="quest-header">
+        <div>
+          <span class="role-title lang-es">Ingeniero de Software / Desarrollador de Sistemas Financieros</span>
+          <span class="role-title lang-en">Software Engineer / Financial Systems Developer</span>
+          <span class="company-name">@ Intercam Banco</span>
+        </div>
+        <span class="quest-date"><span class="lang-es">Dic 2009 – Oct 2014</span><span class="lang-en">Dec 2009 – Oct 2014</span></span>
+      </div>
+      <ul class="quest-bullets lang-es">
+        <li>Ingeniería de módulos para divisas (FX), sistemas de tipos de cambio Reuters y operaciones de Tesorería Corporativa.</li>
+        <li>Integración de arquitectura WebLogic y JBoss EJB2/EJB3 con interfaces front-end en Adobe Flex.</li>
+      </ul>
+      <ul class="quest-bullets lang-en">
+        <li>Engineered modules for FX (Foreign Exchange), Reuters Rate Systems, and Corporate Treasury operations.</li>
+        <li>Integrated WebLogic and JBoss EJB2/EJB3 architecture with Adobe Flex frontends.</li>
+      </ul>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- SCRIPT JS PARA EL MANEJO DE ESTADOS -->
+<script>
+  function toggleLanguage() {
+    const html = document.documentElement;
+    const currentLang = html.getAttribute('data-lang');
+    const newLang = currentLang === 'es' ? 'en' : 'es';
+    html.setAttribute('data-lang', newLang);
+  }
+
+  function toggleTheme() {
+    const html = document.documentElement;
+    const currentTheme = html.getAttribute('data-theme');
+    const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+    html.setAttribute('data-theme', newTheme);
+  }
+</script>
+
+</body>
+</html>
